@@ -1,0 +1,38 @@
+<div class="cardViewDiv dataViewHeight">
+    <div class="background">
+        <div class="contact-form">
+            <img src="../../assets/Images/men.png" class="avatar">
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <input type="radio" value="signin" id="signin" name="action" checked>
+                <label for="signin">Sign in</label>
+
+                <input id="signup" name="action" type="radio" value="signup">
+                <label for="signup">Sign up</label>
+
+                <div id="contain" class="form-group">
+                    <div id="arrow"></div>
+                    
+                    <input id="email" placeholder="Email" type="email" formControlName="email" class="form-control">
+                    <!-- <div *ngIf="loginForm.get('email').touched && loginForm.get('email').invalid" class="help-block">
+                        Please enter a valid email.
+                    </div> -->
+
+                    <input id="password" placeholder="Password" type="password" formControlName="pass"
+                        class="form-control" required>
+                    <!-- <div *ngIf="loginForm.get('pass').touched && loginForm.get('pass').invalid" class="help-block">
+                    Please enter a strong password
+                </div> -->
+                    <input id="repassword" placeholder="Confirm password" type="password" formControlName="confirmPass"
+                        class="form-control" (focusout)="checkPassword()">
+                    <!-- <div *ngIf="notEqual" class="help-block">
+                        Please enter the same password
+                    </div> -->
+                </div>
+                <button type="submit">
+                    <span (click)="signIn()"> <br> Sign in </span>
+                    <span (click)="signUp() "> Sign up </span>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

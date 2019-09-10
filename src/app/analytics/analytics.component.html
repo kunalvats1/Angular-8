@@ -1,0 +1,70 @@
+<mat-drawer-container class="example-container">
+    <mat-drawer #drawer mode="side">
+        <h5 class="sitename">Customer-Kart</h5>
+        <a mat-list-item routerLink="/analytics"><i class="fa fa-bar-chart"></i> Analytics</a>
+        <hr>
+
+        <ng-material-multilevel-menu [configuration]='config' [items]='appitems'>
+        </ng-material-multilevel-menu>
+
+        <a mat-list-item routerLink="/login"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
+        <hr>
+        <a mat-list-item (click)="logout()">
+            <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+        </a>
+        <hr>
+    </mat-drawer>
+    <mat-drawer-content>
+        <mat-toolbar style="background-color: rgba(0, 0, 0, 0.788); color:white">
+            <mat-toolbar-row>
+                <button mat-icon-button>
+                    <mat-icon (click)="drawer.toggle()">menu</mat-icon>
+                </button>
+                <h1 style="padding-left: 35%">
+                    Customer Management
+                </h1>
+                <!-- <span class="menu-spacer"></span> -->
+            </mat-toolbar-row>
+        </mat-toolbar>
+        <div class="cardViewDiv dataViewHeight">
+            <!-- <h5 style="height:8%; width:50%; background-color:purple; color:white; text-align: center;padding-top: 1%">
+                Dashboard
+            </h5><br> --><br>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row visitor">
+
+                        <div class="col-md-6">
+                            <i class="fa fa-life-ring fa-3x"
+                                style="color:white; width: 80%; height: 80%;padding-top:10px;"></i>
+                        </div>
+                        <div class="col-md-6" style="color:white; text-align: center">
+                            10,234<br>
+                            Total Visitors
+                        </div>
+                    </div>
+                    <br>
+                    <div id="pieChartContainer" style="height: 450px; width: 100%; margin: 0px 15px"></div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="row orders">
+
+                        <div class="col-md-6">
+                            <i class="fa fa-bar-chart fa-3x"
+                                style="color:white; width: 80%; height: 80%;padding-top:10px;"></i>
+                        </div>
+                        <div class="col-md-6" style="color:white; text-align: center">
+                            1,250<br>
+                            New orders
+                        </div>
+                    </div>
+                    <br>
+                    <div id="chartContainer" style="height: 450px; width: 100%;margin: 0px 15px;">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>

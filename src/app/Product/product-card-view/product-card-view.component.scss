@@ -1,0 +1,64 @@
+
+.background {
+  position: absolute;
+  bottom: 0px;
+  background-color: black;
+  color: white;
+  float: left;
+  width: 100%;
+  opacity: 0.4;
+  padding-left: 10px;
+}
+
+.card {
+  border: none;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+//New Css
+.column {
+  float: left;
+  width: 25%;
+  padding: 0 10px;
+  margin-bottom: 30px;
+}
+
+/* Remove extra left and right margins, due to padding */
+.row {
+  margin: 10px -5px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  display: table;
+  clear: both;
+}
+
+/* Responsive columns */
+@media screen and (max-width: 500px) {
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 30px;
+  }
+}
+
+@media screen and (min-width: 501px) and (max-width: 800px) {
+  .column {
+    width: 50%;
+    display: inline-block;
+    margin-bottom: 30px;
+  }
+}
+
+@media screen and (min-width: 800px) and (max-width: 1000px) {
+  .column {
+    width: 33.3%;
+    display: inline-block;
+    margin-bottom: 30px;
+  }
+}
+
+.dataViewHeight{
+  height: 600px!important;
+}

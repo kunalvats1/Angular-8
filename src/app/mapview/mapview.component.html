@@ -1,0 +1,91 @@
+<mat-drawer-container class="example-container">
+    <mat-drawer #drawer mode="side">
+        <h5 class="sitename">Customer-Kart</h5>
+        <a mat-list-item routerLink="/analytics"><i class="fa fa-bar-chart"></i> Analytics</a>
+        <hr>
+
+
+        <ng-material-multilevel-menu [configuration]='config' [items]='appitems'>
+        </ng-material-multilevel-menu>
+        <a mat-list-item routerLink="/login"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
+        <hr>
+        <a mat-list-item (click)="empService.logout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+        <hr>
+
+    </mat-drawer>
+    <mat-drawer-content>
+        <mat-toolbar style="background-color: rgb(18, 134, 180); color:white">
+            <mat-toolbar-row>
+                <button mat-icon-button>
+                    <mat-icon (click)="drawer.toggle()">menu</mat-icon>
+                </button>
+                <h1 style="padding-left: 35%">
+                    Customer Management
+                </h1>
+                <!-- <span class="menu-spacer"></span> -->
+            </mat-toolbar-row>
+        </mat-toolbar>
+        <div class="cardViewDiv dataViewHeight">
+            <!-- For Spinner -->
+            <app-loading-spinner *ngIf="showSpinner"></app-loading-spinner>
+            <br>
+            <!--Main Card class-->
+            <div class="card">
+                <!--Main Card Body-->
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        Customer Information
+                    </h5><br>
+
+                    <!--For Padding b/w main card and sub-Card-->
+                    <div class="pd1"></div>
+
+                    <!--Sub-Class Card -- For Individual Card Styling-->
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-2 col-md-2">
+                                <img id="picture" src="{{imageUrl}}" />
+                            </div>
+                            <div class="col-sm-5 col-md-5">
+                                {{name}}<br>
+                                {{emp.email}}<br>
+                                {{address}}
+                            </div>
+                            <div class="col-sm-5 col-md-5">
+                                <agm-map [latitude]="lat" [longitude]="lng">
+                                    <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                                </agm-map>
+                            </div>
+                        </div>
+                        <h4>Orders for {{name}} </h4>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of orders">
+                                    <td>{{item.category}}</td>
+                                    <td>{{item.product}}</td>
+                                    <td>{{item.qunatity}}</td>
+                                    <td>{{item.price | currency}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Total Price</b></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>{{totalPrice | currency}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>

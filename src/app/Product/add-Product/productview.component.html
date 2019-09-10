@@ -1,0 +1,75 @@
+<mat-drawer-container class="example-container">
+    <mat-drawer #drawer mode="side">
+        <h5 class="sitename">Customer-Kart</h5>
+        <a mat-list-item routerLink="/analytics"><i class="fa fa-bar-chart"></i> Analytics</a>
+        <hr>
+
+        <ng-material-multilevel-menu [configuration]='config' [items]='appitems'>
+        </ng-material-multilevel-menu>
+
+
+        <a mat-list-item routerLink="/login"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
+        <hr>
+        <a mat-list-item (click)="empService.logout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+        <hr>
+    </mat-drawer>
+    <mat-drawer-content>
+        <mat-toolbar style="background-color: rgb(18, 134, 180); color:white">
+            <mat-toolbar-row>
+                <button mat-icon-button>
+                    <mat-icon (click)="drawer.toggle()">menu</mat-icon>
+                </button>
+                <h1 style="padding:0% 35%">
+                    Customer Management
+                </h1>
+                <!-- <span class="menu-spacer"></span> -->
+            </mat-toolbar-row>
+        </mat-toolbar>
+        <div class="cardViewDiv dataViewHeight">
+            <br>
+            <div>
+                <form class="contain" [formGroup]="productForm" (ngSubmit)="onSubmit()">
+
+                    <div class="form-group">
+                        <label for="category">Product Category</label>
+                        <input formControlName="category" class="form-control" type="text">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="product">Product Name</label>
+                        <input formControlName="product" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="price">Product Price</label>
+                        <input formControlName="price" id="price" type="number" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Product Description</label>
+                        <textarea rows="3" cols="3" formControlName="description" id="description"
+                            class="form-control"></textarea>
+                    </div>
+                    <button class="btn btn-danger"><a routerLink="/cardView" style="color: white"> Cancel </a></button>
+                    <button class="btn btn-primary view" type="submit" (click)="upload()">Add Product</button>
+                </form>
+
+                <div class="cont">
+                    <input #file type="file" accept='image/*' (change)="detectFile($event, file.files)" /><br><br><br>
+                    <div *ngIf="product">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-animated"
+                                [ngStyle]="{ 'width': product?.progress + '%' }">
+                            </div>
+                        </div>
+                        Progress: {{product?.description}} {{product?.progress}}% Complete
+                    </div>
+                </div>
+
+                <div class="imagePos">
+                    <img [src]="imgUrl" *ngIf="imgUrl" width="350px" height="200px">
+                </div>
+            </div>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>

@@ -1,0 +1,38 @@
+.view {
+  float: right;
+  text-decoration: none;
+}
+
+.view:active {
+  text-decoration: none;
+}
+
+.view:hover {
+  text-decoration: none;
+}
+
+.contain {
+  position: absolute;
+  width: 60%;
+  box-sizing: border-box;
+  margin-left: 2%;
+}
+
+.cont {
+  position: absolute;
+  width: 30%;
+  box-sizing: border-box;
+  margin-left: 67%;
+  margin-top: 24%;
+}
+
+.imagePos {
+  position: absolute;
+  box-sizing: border-box;
+  margin-left: 67%;
+  margin-top: 5%;
+}
+
+.dataViewHeight {
+  height: 600px !important;
+}
