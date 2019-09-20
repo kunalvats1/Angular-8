@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { StudentService } from '../student.service';
-import { Login } from '../login/model.login';
+import { AngularFireAuth } from "@angular/fire/auth";
 
 @Component({
   selector: 'app-login',
@@ -10,37 +10,45 @@ import { Login } from '../login/model.login';
 })
 export class LoginComponent {
 
-  notEqual: boolean;
+  strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
 
   loginForm = new FormGroup({
     confirmPass: new FormControl('', [Validators.required]),
-    pass: new FormControl('', [Validators.required, Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})")]),
+    pass: new FormControl('', [Validators.required, Validators.pattern(this.strongRegex)]),
     email: new FormControl('', [Validators.email, Validators.required])
   });
 
-  constructor(private empService: StudentService) { }
+  constructor(private empService: StudentService, public afAuth: AngularFireAuth) { }
 
-  checkPassword() {
+  displayCssFor(field: string | Array<string>) {
+    return (this.loginForm.get(field).invalid && (this.loginForm.get(field).touched || this.loginForm.get(field).dirty)) ? 'error' : '';
+  }
+
+  confirmPass(field: string) {
     if (this.loginForm.controls.pass.value !== this.loginForm.controls.confirmPass.value) {
-      this.notEqual = true;
+      return (this.loginForm.get(field).touched || this.loginForm.get(field).dirty) ? 'error' : '';
     }
   }
 
   signIn() {
     let email = this.loginForm.controls.email.value;
     let password = this.loginForm.controls.pass.value;
-    this.loginForm.reset();
-    this.empService.login(email, password);
+    if (email === '' || password === '') {
+      this.empService.error("Please fill all the fields");
+    } else {
+      this.loginForm.reset();
+      this.empService.login(email, password);
+    }
   }
 
   signUp() {
     let email = this.loginForm.controls.email.value;
     let password = this.loginForm.controls.pass.value;
-    this.loginForm.reset();
-    this.empService.register(email, password);
-  }
-
-  onSubmit() {
-
+    if (email === '' || password === '') {
+      this.empService.error("Please fill all the fields");
+    } else {
+      this.loginForm.reset();
+      this.empService.register(email, password);
+    }
   }
 }

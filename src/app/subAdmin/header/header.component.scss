@@ -1,0 +1,76 @@
+.header {
+  margin: 0 auto;
+  z-index: 10;
+  width: 100%;
+  position: fixed;
+  background: #fff;
+  box-sizing: border-box;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
+}
+.sub-header {
+  background-color: #4f6b72;
+  padding: 10px 16px;
+  height: 58px;
+}
+
+.nav-style {
+  position: relative;
+  margin-right: 15px;
+  display: block;
+  z-index: 3;
+}
+.heading {
+  padding-left: 25px;
+  font-size: 20px;
+  color: white !important;
+}
+.fright {
+  float: right;
+  // border: 2px solid #4f6b72;
+  // border-radius: 5px;
+  // padding: 5px 10px;
+  // text-align: center;
+  // transition-delay: 0.2s !important;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+//button css
+.two {
+  top: 400px;
+  left: 0;
+}
+.two #button {
+  padding: 0px 10px 3px 10px!important;
+  color: #f6f6f6;
+  font-size: 1.5em;
+  transform: translate(-50%, -50%);
+  background: transparent;
+  overflow: hidden;
+  transition: all 0.6s cubic-bezier(0.55, 0, 0.1, 1);
+  cursor: pointer;
+  box-shadow: 0px 2px 2px black;
+  border-radius: 50px;
+  border: white solid 3px;
+  z-index: 10;
+}
+.two #button::after {
+  position: absolute;
+  content: "";
+  top: 0px;
+  left: 0px;
+  width: 0%;
+  height: 100%;
+  z-index: -1;
+  transition: all 2s ease;
+}
+.two #button:hover::after {
+  width: 800%;
+}
+.two #button:hover {
+  color: white;
+  box-shadow: 0px 10px 8px rgba(0, 0, 0, 0.6);
+}

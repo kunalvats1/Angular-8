@@ -72,6 +72,7 @@ label {
   font-weight: 700;
   opacity: 0.5;
   margin-bottom: 30px;
+  color: rgba(245, 245, 245, 0.466);
 }
 
 label:hover {
@@ -86,6 +87,7 @@ label[for="reset"] {
 }
 input[type="radio"]:checked + label {
   opacity: 1;
+  color: white;
 }
 
 input[type="email"],
@@ -149,22 +151,11 @@ button:hover {
   box-sizing: border-box;
   background: rgba(0, 0, 0, 0.5);
 }
-.avatar {
-  position: absolute;
-  width: 80px;
-  height: 80px;
-  //border-radius: 30%;
-  overflow: hidden;
-  top: 5px;
-  left: calc(50% - 40px);
-}
 
 .dataViewHeight {
   height: 630px !important;
 }
 
 .error {
-  input[type="password"] {
-    outline: #4CAF50 solid 5px;
-  }
+  border: solid red 2px !important;
 }

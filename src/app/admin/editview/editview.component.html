@@ -1,0 +1,108 @@
+<div class="cardViewDiv dataViewHeight">
+    <!-- For Spinner -->
+   
+    <div class="container">
+        <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input formControlName="firstName" id="firstName" type="text" [(ngModel)]="employe.firstName"
+                    class="form-control">
+                <div *ngIf="myForm.get('firstName').touched && myForm.get('firstName').invalid"
+                    class="alert alert-danger">
+                    First Name is required.
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input formControlName="lastName" id="lastName" type="text" [(ngModel)]="employe.lastName"
+                    class="form-control">
+                <div *ngIf="myForm.get('lastName').touched && myForm.get('lastName').invalid"
+                    class="alert alert-danger">
+                    Last Name is required.
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input formControlName="email" id="email" type="text" [(ngModel)]="employe.email" class="form-control">
+                <div *ngIf="myForm.get('email').touched && myForm.get('email').invalid" class="alert alert-danger">
+                    Please enter a valid email.
+                </div>
+            </div>
+
+            <div class="card-columns">
+                <div class="form-group">
+
+                    <label for="country">Address</label>
+                    <select formControlName="country" class="form-control"
+                        (change)="onChangeCountry($event.target.value)">
+                        <option selected="selected">{{employe.address.country}}</option>
+                        <option *ngFor="let country of countries">{{country}}</option>
+                    </select>
+
+                    <label for="state">State</label>
+                    <select formControlName="state" class="form-control" (change)="onChangeState($event.target.value)">
+                        <option selected="selected">{{employe.address.state}}</option>
+                        <option *ngFor="let state of states">{{state}}</option>
+                    </select>
+
+                    <label for="city">City</label>
+                    <select formControlName="city" class="form-control">
+                        <option selected="selected">{{employe.address.city}}</option>
+                        <option *ngFor="let city of cities">{{city}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Categories</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th (click)="addFieldValue()"> <i class="fa fa-plus-square text-center"
+                                    aria-hidden="true"></i>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let field of fieldArray; let i = index">
+                            <td>
+                                <select class="form-control" (change)="onChangeCategory($event.target.value, field)">
+                                    <option selected="selected">{{field.selectedCategory}}</option>
+                                    <option *ngFor="let category of field.category">{{category}}</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-control"
+                                    (change)="onChangeProduct(field.selectedCategory, $event.target.value, field)">
+                                    <option selected="selected">{{field.selectedProduct}}</option>
+                                    <option *ngFor="let product of field.products">{{product}}</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input id="quantity" type="number" class="form-control" value={{field.selectedQuantity}}
+                                    (change)="onChangeQuantity($event.target.value, field)">
+                            </td>
+                            <td>
+                                <input id="price" readonly type="text" class="form-control"
+                                    value={{field.selectedPrice}}>
+                            </td>
+                            <td>
+                                <button class="btn btn-default" type="button"
+                                    (click)="deleteFieldValue(i)">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <button class="btn btn-primary" type="submit">Update Customer</button>
+            <button class="btn btn-danger view"><a routerLink="/cardView" style="color: white"> Cancel
+                </a></button>
+        </form>
+    </div>
+</div>

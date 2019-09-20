@@ -1,0 +1,147 @@
+<div class="cardViewDiv dataViewHeight">
+    <div class="header">
+        <div class="sub-header">
+            <nav class="nav-style">
+                <span (click)="warning()"> <i class="fa fa-arrow-left fa-1x" style="color: white"></i></span>
+                <span class="heading"><strong>Customer-Kart</strong></span>
+            </nav>
+        </div>
+    </div>
+    <div style="padding-top: 6%">
+    </div>
+    <div class="container">
+        <form [formGroup]="addForm"  (ngSubmit)="onSubmit()">
+            <div class="row">
+                <h4>Product Information</h4>
+                <div class="input-group input-group-icon">
+                    <input type="title" placeholder="Add Title" formControlName="title" />
+                    <div class="input-icon"><i class="fa fa-bandcamp"></i></div>
+                </div>
+                <div class="row">
+                    <div class="input-group" style="margin-left: 3.5%">
+                        <textarea rows="3" cols="74" placeholder="Enter Description" formControlName="description"
+                            class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="input-group input-group-icon">
+                    <input type="number" placeholder="Enter Price" formControlName="price" (focusout)="priceFun()" />
+                    <div class="input-icon"><i class="fa fa-inr"></i></div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <h4>Phone number</h4>
+                <div class="input-group input-group-icon">
+                    <input type="phone" placeholder="Phone Number" formControlName="phone" maxlength="10"
+                        pattern="\d{10}" (keyup)="validate($event)" />
+                    <div class="input-icon"><i class="fa fa-phone"></i></div>
+                </div>
+            </div>
+            <div class="pd2"></div>
+            <div class="row">
+                <div>
+                    <h4>Confirm Your Location</h4><br>
+                    <span>
+                        <button class="btn btn-light" style="color:#4f6b72" type="button" id="manual"
+                            (click)="manlocation()" [ngClass]="{
+                                'button-active': !currentLocation
+                              }">Manual
+                            Selection</button>
+                        <span class="pd4"></span>
+                        <button class="btn btn-light" style="color:#4f6b72" type="button" id="auto"
+                            (click)="curlocation()" [ngClass]="{
+                                'button-active': currentLocation
+                              }">Current
+                            Location</button>
+                    </span><br>
+                    <div *ngIf="!currentLocation">
+                        <div class="input-group">
+                            <input type="text" placeholder="country" formControlName="country" />
+                        </div>
+                        <div class="input-group">
+                            <input type="text" placeholder="state" formControlName="state" />
+                        </div>
+                        <div class="input-group">
+                            <input type="text" placeholder="City" formControlName="city" />
+                        </div>
+                    </div>
+                    <div *ngIf="currentLocation">
+                        <div class="country">
+                            <p class="_address">
+                                <span>Country</span>
+                            </p>
+                            <p class="address_data">
+                                <span>India</span>
+                            </p>
+                        </div>
+                        <hr>
+                        <div class="country">
+                            <p class="_address">
+                                <span>State</span>
+                            </p>
+                            <p class="address_data">
+                                <span>Uttar Pradesh</span>
+                            </p>
+                        </div>
+                        <hr>
+                        <div class="country">
+                            <p class="_address">
+                                <span>City</span>
+                            </p>
+                            <p class="address_data">
+                                <span>Noida</span>
+                            </p>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <h4>Upload Photos</h4>
+            </div>
+            <div class="image">
+                <div class="col-img" [ngStyle]="getMyStyles()" >
+                    <label for="file-input">
+                        <i *ngIf="imgUrl1" class="fa fa-camera fa-2x" aria-hidden="true" style="margin-top:60px"></i>
+                        <!-- <img [src]="imgUrl1" *ngIf="imgUrl1" width="210px" height="210px"> -->
+                    </label>
+                    <input id="file-input" #file1 type="file" accept='image/*'
+                        (change)="detectFile1($event, file1.files)" />
+                </div>
+
+                <div class="col-img">
+                    <label for="file-input2">
+                        <i *ngIf="!imgUrl2" class="fa fa-camera fa-2x" aria-hidden="true" style="margin-top:60px"></i>
+                        <img [src]="imgUrl2" *ngIf="imgUrl2" width="200px" height="200px">
+                    </label>
+                    <input id="file-input2" #file2 type="file" accept='image/*'
+                        (change)="detectFile2($event, file2.files)" />
+                </div>
+
+                <div class="col-img">
+                    <label for="file-input3">
+                        <i *ngIf="!imgUrl3" class="fa fa-camera fa-2x" aria-hidden="true" style="margin-top:60px"></i>
+                        <img [src]=" imgUrl3" *ngIf="imgUrl3" width="100%" height="200%">
+                    </label>
+                    <input id="file-input3" #file type="file" accept='image/*'
+                        (change)="detectFile3($event, file.files)" />
+                </div>
+            </div><br><br>
+            <div class="row">
+                <h4>Terms and Conditions</h4>
+                <div class="input-group">
+                    <input type="checkbox" id="terms" />
+                    <label for="terms">I accept the terms and conditions for signing up to this service, and hereby
+                        confirm I have read the privacy policy.</label>
+                </div>
+            </div><br>
+            <button class="learn-more" type="submit" [disabled]="!addForm.valid">
+                <div class="circle">
+                    <span class="icon arrow"></span>
+                </div>
+                <p class="button-text">Post your Add</p>
+            </button>
+        </form>
+    </div>
+</div>

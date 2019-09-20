@@ -1,0 +1,60 @@
+<div class="cardViewDiv dataViewHeight">
+
+  <div class="container">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+    <div class="cardViewDiv dataViewHeight">
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+        <!-- Image Column -->
+        <ng-container matColumnDef="image">
+          <th mat-header-cell *matHeaderCellDef> </th>
+          <td mat-cell *matCellDef="let element"><img src="{{element.url}}" width="40px" height="35px"></td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="firstName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.firstName}} {{element.lastName}} </td>
+        </ng-container>
+
+        <!-- Email Column -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef> E-mail </th>
+          <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+        </ng-container>
+
+        <!-- Address Column -->
+        <ng-container matColumnDef="address">
+          <th mat-header-cell *matHeaderCellDef> Address </th>
+          <td mat-cell *matCellDef="let element"> {{element.address.city}}, {{element.address.state}},
+            {{element.address.country}} </td>
+        </ng-container>
+
+        <!-- Address Column -->
+        <ng-container matColumnDef="totalPrice">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Order Total Price </th>
+          <td mat-cell *matCellDef="let element"> {{element.totalPrice | currency}} </td>
+        </ng-container>
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef> Action </th>
+          <td mat-cell *matCellDef="let element">
+            <span>
+              <a routerLink="/editview"><i class="fa fa-edit view"
+                  (click)='updateCustomer(element.key , element)'></i></a>
+              <i class="fa fa-trash-o view" (click)='deleteCustomer(element)'></i>
+            </span>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator [pageSize]="9" [pageSizeOptions]="[5, 10, 25, 100]">
+      </mat-paginator>
+    </div>
+  </div>
+</div>

@@ -1,48 +1,23 @@
-import { Component } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { StudentService } from './student.service';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
-  constructor(private toster: ToastrService) { }
+  constructor(private service: StudentService, private router: Router, private spinner: NgxSpinnerService) { }
 
-  public appitems = [
-    {
-      label: 'Customer',
-      icon: 'sentiment_satisfied_alt',
-      items: [
-        {
-          label: 'Views',
-          link: '/cardView',
-          icon: 'remove_red_eye'
-        },
-        {
-          label: 'Add Customer',
-          icon: 'person_add',
-          link: '/newCustomer'
+  ngOnInit() {
+    this.spinner.show();
 
-        }
-      ]
-    },
-    {
-      label: 'Product',
-      icon: 'label_important',
-      items: [
-        {
-          label: 'Add Product',
-          link: '/add-product',
-          icon: 'add_circle_outline'
-        },
-        {
-          label: 'View Product',
-          link: '/product-view',
-          icon: 'portrait'
-        }
-      ]
-    },
-  ];
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 2000);
+  }
+
 }

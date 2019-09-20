@@ -2,34 +2,44 @@ import { Injectable } from '@angular/core';
 import { employee } from './employee';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { ToastrService } from 'ngx-toastr';
-import { Products } from './Product/add-Product/product.model';
-import { Login } from './login/model.login';
+import { Products } from './admin/add-Product/product.model';
 import { auth } from 'firebase/app';
 import { AngularFireAuth } from "@angular/fire/auth";
 import { User } from 'firebase';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Country } from './country.model';
+import { Ad } from './subAdmin/ad-model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StudentService {
 
+  uploadTask: firebase.storage.UploadTask;
+
   user: User;
   product: Products;
+  ad: Ad;
+
   dbPath = '/employes';
   dbProductPath = '/product';
-  uploadTask: firebase.storage.UploadTask;
+  dbAdPath = '/postAd';
 
   customersRef: AngularFireList<employee> = null;
   productRef: AngularFireList<Products> = null;
-  loginRef: AngularFireList<Login> = null;
+  postAdRef: AngularFireList<Ad> = null;
+
   basePath: string = '/upload';
   customerPath: string = '/customerUploads';
+  postAdPath: string = '/ad_images';
 
-  constructor(private db: AngularFireDatabase, public afAuth: AngularFireAuth, public router: Router, private toastr: ToastrService) {
+  constructor(private http: HttpClient, private db: AngularFireDatabase, public afAuth: AngularFireAuth, public router: Router, private toastr: ToastrService) {
     this.customersRef = db.list(this.dbPath);
     this.productRef = db.list(this.dbProductPath);
+    this.postAdRef = db.list(this.dbAdPath);
 
     // Login method
     this.afAuth.authState.subscribe(user => {
@@ -39,36 +49,51 @@ export class StudentService {
       } else {
         localStorage.setItem('user', null);
       }
-      console.log(this.user);
     })
   }
 
   // Login 
-  async login(email: string, password: string) {
-    var result = await this.afAuth.auth.signInWithEmailAndPassword(email, password);
-    this.successToastr();
-    this.router.navigate(['/analytics']);
-
+  login(email: string, password: string) {
+    this.afAuth.auth.signInWithEmailAndPassword(email, password).then((data) => {
+      this.success("Successfully Login")
+      this.router.navigate(['/subadmin']);
+    }).catch((err) => {
+      this.error("Wrong Email/password");
+    });
   }
 
-  async register(email: string, password: string) {
-    var result = await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
-    this.sendEmailVerification();
+  register(email: string, password: string) {
+    //   this.afAuth.auth.createUserWithEmailAndPassword(email, password).then((data) => {
+    //     this.success("Successfully SignUp")
+    //     this.router.navigate(['/login']);
+    //   }).catch((err) => {
+    //     this.error("You are already signup");
+    //   });
+    // this.sendEmailVerification();
+
+    this.afAuth.auth.createUserWithEmailAndPassword(email, password).then((user) => {
+      this.success("Successfully SignUp");
+      this.router.navigate(['/login']);
+      user.user.sendEmailVerification();
+      firebase.auth().currentUser.sendEmailVerification();
+    }).catch((err) => {
+      this.error("Already SignUp Please Login");
+    })
   }
 
-  async sendEmailVerification() {
-    await this.afAuth.auth.currentUser.sendEmailVerification()
-    this.successToastr();
-  }
+  // async sendEmailVerification() {
+  //   await this.afAuth.auth.currentUser.sendEmailVerification()
+  //   this.successToastr();
+  // }
 
-  async sendPasswordResetEmail(passwordResetEmail: string) {
-    return await this.afAuth.auth.sendPasswordResetEmail(passwordResetEmail);
-  }
+  // async sendPasswordResetEmail(passwordResetEmail: string) {
+  //   return await this.afAuth.auth.sendPasswordResetEmail(passwordResetEmail);
+  // }
 
   async logout() {
     await this.afAuth.auth.signOut();
     localStorage.removeItem('user');
-    this.router.navigate(['/login']);
+    this.router.navigate(['']);
   }
 
   // For facebook
@@ -87,12 +112,11 @@ export class StudentService {
       })
   }
 
-   // Returns true when user is looged in and email is verified
-   get isLoggedIn(): boolean {
+  // Returns true when user is looged in and email is verified
+  get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user'));
     return (user !== null) ? true : false;
   }
-
 
 
   // CRUD Methods
@@ -138,6 +162,14 @@ export class StudentService {
     this.toastr.success('Data saved succesfully');
   }
 
+  public success(mess: string) {
+    this.toastr.success(mess);
+  }
+
+  public error(mess: string) {
+    this.toastr.error(mess);
+  }
+
   public errorDataSave() {
     this.toastr.error('Please enter valid Email');
   }
@@ -172,5 +204,35 @@ export class StudentService {
 
   getProductsList(): AngularFireList<Products> {
     return this.productRef;
+  }
+
+  postAd(upload: Ad): void {
+    let storageRef = firebase.storage().ref();
+    this.uploadTask = storageRef.child(`${this.postAdPath}/${upload.image.name}`).put(upload.image);
+
+    this.uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+      (snapshot) => {
+        // upload in progress
+        upload.progress = (this.uploadTask.snapshot.bytesTransferred / this.uploadTask.snapshot.totalBytes) * 100;
+      },
+      (error) => {
+        // upload failed
+        console.log(error);
+      },
+      () => {
+        // upload success
+        this.uploadTask.snapshot.ref.getDownloadURL().then(downloadUrl => {
+          upload.url = downloadUrl;
+          this.postAdRef.push(upload);
+          this.success("Data saved Sucessfully");
+        });
+      }
+    );
+
+  }
+
+  // get countries from json
+  getCountries(): Observable<Country[]> {
+    return this.http.get<Country[]>('../assets/countries.json');
   }
 }

@@ -1,0 +1,60 @@
+<div class="cardViewDiv dataViewHeight">
+
+    <div class="container">
+        <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input formControlName="firstName" id="firstName" type="text" class="form-control">
+                <div *ngIf="myForm.get('firstName').touched && myForm.get('firstName').invalid"
+                    class="alert alert-danger">
+                    First Name is required.
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input formControlName="lastName" id="lastName" type="text" class="form-control">
+                <div *ngIf="myForm.get('lastName').touched && myForm.get('lastName').invalid"
+                    class="alert alert-danger">
+                    Last Name is required.
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input formControlName="email" id="email" type="text" class="form-control">
+                <div *ngIf="myForm.get('email').touched && myForm.get('email').invalid" class="alert alert-danger">
+                    Please enter a valid email.
+                </div>
+            </div>
+
+            <div class="card-columns">
+                <div class="form-group">
+
+                    <label for="country">Address</label>
+                    <select formControlName="country" class="form-control"
+                        (change)="onChangeCountry($event.target.value)">
+                        <option value="">Select country...</option>
+                        <option *ngFor="let country of countries">{{country}}</option>
+                    </select>
+
+                    <label for="state">State</label>
+                    <select formControlName="state" class="form-control" (change)="onChangeState($event.target.value)">
+                        <option value="">Select state...</option>
+                        <option *ngFor="let state of states">{{state}}</option>
+                    </select>
+
+                    <label for="city">City</label>
+                    <select formControlName="city" class="form-control">
+                        <option value="">Select city...</option>
+                        <option *ngFor="let city of cities">{{city}}</option>
+                    </select>
+                </div>
+            </div>
+            <input #file type="file" accept='image/*' (change)="detectFile($event, file.files)" /><br><br><br>
+
+            <button class="btn btn-primary view" type="submit">Add Customer</button>
+            <button class="btn btn-danger "><a routerLink="/listView" style="color: white"> Cancel </a></button>
+        </form>
+    </div>
+</div>

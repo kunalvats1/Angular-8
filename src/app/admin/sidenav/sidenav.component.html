@@ -1,0 +1,25 @@
+<mat-drawer-container class="example-container">
+    <mat-drawer #drawer mode="side">
+        <h5 class="sitename">Customer-Kart</h5>
+        <ng-material-multilevel-menu [configuration]='config' [items]='appitems' (selectedItem)="selectedItem($event)">
+        </ng-material-multilevel-menu>
+
+        <a mat-list-item (click)="logout()">
+            <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+        </a>
+        <hr>
+    </mat-drawer>
+    <mat-drawer-content>
+        <mat-toolbar style="background-color: rgb(18, 134, 180); color:white">
+            <mat-toolbar-row>
+                <button mat-icon-button>
+                    <mat-icon (click)="drawer.toggle()">menu</mat-icon>
+                </button>
+                <h1 style="padding-left: 35%">
+                    Customer Management
+                </h1>
+            </mat-toolbar-row>
+        </mat-toolbar>
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
+</mat-drawer-container>

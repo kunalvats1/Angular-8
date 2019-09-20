@@ -1,30 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { MapviewComponent } from './mapview/mapview.component';
-import { ListviewComponent } from './listview/listview.component';
-import { NewCustomerComponent } from './new-customer/new-customer.component';
-import { EditviewComponent } from './editview/editview.component';
-import { ProductviewComponent } from './Product/add-Product/productview.component';
-import { ProductCardViewComponent } from './Product/product-card-view/product-card-view.component';
-import { ProductComponent } from './Product/productHomePage/product.component';
-import { LoginhomeComponent } from './login/loginhome/loginhome.component';
-import { AnalyticsComponent } from './analytics/analytics.component';
-import { AuthGuard } from "./shared/guard/auth.guard";
+import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
+import { AuthGuard } from './shared/guard/auth.guard';
+import { SubadminLoginComponent } from './admin-login/subadmin-login.component';
 
-const routes: Routes = [{ path: 'map-view', component: MapviewComponent },
-{ path: 'listView', component: ListviewComponent, canActivate: [AuthGuard] },
-{ path: 'editview', component: EditviewComponent, canActivate: [AuthGuard] },
-{ path: 'newCustomer', component: NewCustomerComponent, canActivate: [AuthGuard] },
-{ path: 'add-product', component: ProductviewComponent, canActivate: [AuthGuard] },
-{ path: 'product-view', component: ProductCardViewComponent, canActivate: [AuthGuard] },
-{ path: 'cardView', component: ProductComponent, canActivate: [AuthGuard] },
-{ path: 'login', component: LoginhomeComponent },
-{ path: 'analytics', component: AnalyticsComponent, canActivate: [AuthGuard] },
-{
-  path: '',
-  redirectTo: '/login',
-  pathMatch: 'full'
-}
+const routes: Routes = [
+
+  { path: '', component: HomeComponent },
+  { path: 'subadmin', loadChildren: './subAdmin/home.module#HomeModule', canActivate: [AuthGuard] },
+  { path: 'admin', loadChildren: './admin/admin.module#AdminModule' },
+  { path: 'login', component: LoginComponent },
+  { path: 'subadmin-login', component: SubadminLoginComponent },
 ];
 
 @NgModule({

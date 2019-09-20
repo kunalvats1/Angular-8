@@ -1,0 +1,59 @@
+<div class="cardViewDiv dataViewHeight">
+    <!--Main Card class-->
+    <div class="card">
+        <!--Main Card Body-->
+        <div class="card-body">
+            <h5 class="card-title">
+                <i class="fa fa-user" aria-hidden="true"></i>
+                Customer Information
+            </h5><br>
+
+            <!--For Padding b/w main card and sub-Card-->
+            <div class="pd1"></div>
+
+            <!--Sub-Class Card -- For Individual Card Styling-->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-2 col-md-2">
+                        <img id="picture" src="{{imageUrl}}" />
+                    </div>
+                    <div class="col-sm-5 col-md-5">
+                        {{name}}<br>
+                        {{emp.email}}<br>
+                        {{address}}
+                    </div>
+                    <div class="col-sm-5 col-md-5">
+                        <agm-map [latitude]="lat" [longitude]="lng">
+                            <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                        </agm-map>
+                    </div>
+                </div>
+                <h4>Orders for {{name}} </h4>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of orders">
+                            <td>{{item.category}}</td>
+                            <td>{{item.product}}</td>
+                            <td>{{item.quantity}}</td>
+                            <td>{{item.price | currency}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Total Price</b></td>
+                            <td></td>
+                            <td></td>
+                            <td>{{totalPrice | currency}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

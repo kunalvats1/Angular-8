@@ -1,0 +1,34 @@
+.dataViewHeight {
+  height: 580px !important;
+}
+
+.view {
+  float: right;
+  text-decoration: none;
+}
+
+.view:active {
+  text-decoration: none;
+}
+
+.view:hover {
+  text-decoration: none;
+}
+
+.input:invalid {
+  border: 2 px solid red;
+}
+
+.cont {
+  position: absolute;
+  width: 30%;
+  box-sizing: border-box;
+  margin-left: 67%;
+  margin-top: 24%;
+}
+
+.imagePos {
+  position: absolute;
+  box-sizing: border-box;
+  margin-left: 40%;
+}
